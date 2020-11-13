@@ -6,7 +6,6 @@ class GameRoom {
         this.password = password;
         this.participants = [client];
         this.isGameStarted = false;
-
         client.emit('roomCreated');
     }
 
@@ -27,8 +26,15 @@ class GameRoom {
         if(this.participants.length === fullRoomNumber) {
             this.isGameStarted = true;
             for(const participant of participants)
+                // TODO: send additional information
                 participant.emit('gameStarted');
         }
+    }
+
+    getRoomDTO() {
+        return {
+            roomName: this.roomName
+        };
     }
 }
 
