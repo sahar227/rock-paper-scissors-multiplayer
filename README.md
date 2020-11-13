@@ -1,2 +1,2 @@
-# rock-paper-scissors-multiplayer
-Multiplayer rock paper scissors web game
+# tic-tac-toe-multiplayer
+Multiplayer tic tac toe web game
