@@ -15,11 +15,11 @@ io.on('connection', client => {
 
     // Handles request for available rooms the user can join. roomNamePrefix allows users to filter for specific room.
     client.on('getAvailableRooms', (roomNamePrefix = '') => {
-        client.emit('availableGameRooms', gameRooms.filter(gr => gr.isOpenForJoin() && gr.roomName.startsWith(roomNamePrefix)));
+        client.emit('availableRooms', gameRooms.filter(gr => gr.isOpenForJoin() && gr.roomName.startsWith(roomNamePrefix)));
     });
 
     // Handles request to join specific room
-    client.on('joinGame', (roomName, password = '') => {
+    client.on('joinRoom', (roomName, password = '') => {
         const gameRoom = gameRooms.find(gr => gr.roomName === roomName);
         gameRoom.joinRoom(client, password);
     });
