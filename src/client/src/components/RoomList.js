@@ -3,7 +3,8 @@ import RoomListItem from './RoomListItem'
 
 export default function RoomList({availableRooms, onRefresh, joinRoom}) {
     const renderRoomItems = () => {
-    return availableRooms.map(room => <RoomListItem roomData={room} joinRoom={joinRoom(room.roomName)}/>)
+    // TODO: change key to a room id
+    return availableRooms.map((room, i) => <RoomListItem key={i} roomData={room} joinRoom={joinRoom(room.roomName)}/>)
     }
     return (
         <div>

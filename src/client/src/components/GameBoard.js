@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import GameBoardCell from './GameBoardCell';
 
 
@@ -6,7 +6,7 @@ export default function GameBoard({board, placePiece}) {
 
     const renderBoard = () => {
         return board.map((row, i) => {
-            return row.map((cell, j) => <GameBoardCell placePiece={() => placePiece(i, j)} value={cell}/>) 
+            return row.map((cell, j) => <GameBoardCell key={i*10 + j} placePiece={() => placePiece(i, j)} value={cell}/>) 
         });
     };
     return (

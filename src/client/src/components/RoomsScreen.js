@@ -22,7 +22,6 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
         if(!socket)
             return;
         socket.on('availableRooms', (rooms) => {
-            console.log('available rooms:', rooms);
             setAvailableRooms(rooms);
           });
           socket.on('roomCreated', () => setWaitScreen());
