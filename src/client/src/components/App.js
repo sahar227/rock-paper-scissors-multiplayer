@@ -4,6 +4,7 @@ import {URL} from '../configs';
 
 import RoomsScreen from './RoomsScreen';
 import GameScreen from './GameScreen';
+import WaitScreen from './WaitScreen';
 
 
 function App() {
@@ -12,6 +13,9 @@ function App() {
 
   const setGameScreen = () => {
     setScreen('game');
+  };
+  const setWaitScreen = () => {
+    setScreen('wait');
   };
 
   useEffect(() => {
@@ -22,7 +26,8 @@ function App() {
   return (
     <div>
       <h1>Tic Tac Toe!</h1>
-      {screen === 'rooms' && <RoomsScreen socket={socket} setGameScreen={setGameScreen}/>}
+      {screen === 'rooms' && <RoomsScreen socket={socket} setGameScreen={setGameScreen} setWaitScreen={setWaitScreen}/>}
+      {screen === 'wait' && <WaitScreen/>}
       {screen === 'game' && <GameScreen />}
     </div>
   );

@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
+import CreateRoom from "./CreateRoom";
 import RoomList from './RoomList';
 
-export default function RoomsScreen({socket, setGameScreen}) {
+export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
     const [availableRooms, setAvailableRooms] = useState([])
 
-    const createRoom = () => {
-        socket.emit('createRoom', {roomName: 'my room'});
-        getRooms(socket);
+    const createRoom = (roomName, password) => {
+        socket.emit('createRoom', {roomName, password});
+    }
+
+    const joinRoom = (roomName) => (password) => {
+        socket.emit('joinRoom', {roomName, password});
     }
     const getRooms = useCallback(() => {
     if(!socket)
@@ -21,14 +25,15 @@ export default function RoomsScreen({socket, setGameScreen}) {
             console.log('available rooms:', rooms);
             setAvailableRooms(rooms);
           });
-          socket.on('roomCreated', () => setGameScreen('game'));
+          socket.on('roomCreated', () => setWaitScreen());
+          socket.on('gameStarted', () => setGameScreen());
           getRooms(socket);
     }, [socket, getRooms, setGameScreen]);
     
     return (
         <div>
-            <button onClick={createRoom}>Create Room!</button>
-            <RoomList availableRooms={availableRooms} onRefresh={() => getRooms(socket)} />
+            <CreateRoom onCreateRoom={createRoom}/>
+            <RoomList availableRooms={availableRooms} onRefresh={() => getRooms(socket)} joinRoom={joinRoom} />
         </div>
         );
 }

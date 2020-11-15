@@ -3,7 +3,7 @@ import React from 'react'
 export default function GameScreen() {
     return (
         <div>
-            Game screen
+            Waiting for another player to join...
         </div>
     )
 }

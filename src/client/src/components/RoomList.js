@@ -1,14 +1,15 @@
 import React from 'react'
+import RoomListItem from './RoomListItem'
 
-export default function RoomList({availableRooms, onRefresh}) {
-    const renderRooms = () => {
-    return availableRooms.map(room => <p>{room.roomName}</p>)
+export default function RoomList({availableRooms, onRefresh, joinRoom}) {
+    const renderRoomItems = () => {
+    return availableRooms.map(room => <RoomListItem roomData={room} joinRoom={joinRoom(room.roomName)}/>)
     }
     return (
         <div>
-            <p>Rooms:</p>
+            <h2>Join an existing room:</h2>
             <button onClick={onRefresh}>Refresh list</button>
-            {renderRooms()}
+            {renderRoomItems()}
         </div>
     )
 }
