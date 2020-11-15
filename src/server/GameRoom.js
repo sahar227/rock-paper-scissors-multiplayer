@@ -1,3 +1,5 @@
+const TicTacToeSession = require('./TicTacToeSession');
+
 const fullRoomNumber = 2;
 
 class GameRoom {
@@ -5,6 +7,7 @@ class GameRoom {
         this.roomName = roomName;
         this.password = password;
         this.participants = [client];
+        this.gameSession = null;
         client.emit('roomCreated');
         client.on('discconnect', () => this.leaveRoom(client.id));
         client.on('leaveRoom', () => this.leaveRoom(client.id));
@@ -26,10 +29,11 @@ class GameRoom {
 
         this.participants.push(client);
         if(this.participants.length === fullRoomNumber) {
-            for(const participant of this.participants)
-                // TODO: send additional information
-                participant.emit('gameStarted');
+            this.startGame();
         }
+    }
+    startGame() {
+        this.gameSession = new TicTacToeSession(this.participants);
     }
 
     leaveRoom(participantId) {

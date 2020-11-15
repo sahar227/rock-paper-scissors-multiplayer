@@ -28,7 +28,7 @@ function App() {
       <h1>Tic Tac Toe!</h1>
       {screen === 'rooms' && <RoomsScreen socket={socket} setGameScreen={setGameScreen} setWaitScreen={setWaitScreen}/>}
       {screen === 'wait' && <WaitScreen/>}
-      {screen === 'game' && <GameScreen />}
+      {screen === 'game' && <GameScreen socket={socket}/>}
     </div>
   );
 }

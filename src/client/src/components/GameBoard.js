@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import GameBoardCell from './GameBoardCell';
 
 
-const initialBoard = [['', '', ''],['', '', ''],['', '', '']];
-export default function GameBoard() {
-    const [board, setBoard] = useState(initialBoard);
+export default function GameBoard({board, placePiece}) {
 
     const renderBoard = () => {
-        return board.map((row) => {
-            return row.map((cell) => <GameBoardCell value={cell}/>) 
+        return board.map((row, i) => {
+            return row.map((cell, j) => <GameBoardCell placePiece={() => placePiece(i, j)} value={cell}/>) 
         });
     };
     return (

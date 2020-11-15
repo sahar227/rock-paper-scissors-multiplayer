@@ -28,7 +28,7 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
           socket.on('roomCreated', () => setWaitScreen());
           socket.on('gameStarted', () => setGameScreen());
           getRooms(socket);
-    }, [socket, getRooms, setGameScreen]);
+    }, [socket, getRooms, setGameScreen, setWaitScreen]);
     
     return (
         <div>
