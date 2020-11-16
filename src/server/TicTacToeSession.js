@@ -1,6 +1,7 @@
 class TicTacToeSession {
     constructor(participants) {
         this.board = createNewBoard();
+        this.isGameStarted = true;
         this.score = {
             xWon: 0,
             oWon: 0
@@ -32,6 +33,16 @@ class TicTacToeSession {
             if(this.isPlayerTurn(player))
                 this.placePiece(row, col, player.symbol);
         });
+
+        player.socket.on('playAgain', () => {
+            if(this.isGameStarted)
+                return;
+            this.board = createNewBoard();
+            this.isXturn = true;
+            this.isGameStarted = true;
+            for(const {socket} of this.players)
+                socket.emit('gameRestarted', this.isXturn);
+        });
     }
 
     isPlayerTurn(player) {
@@ -40,11 +51,13 @@ class TicTacToeSession {
 
     placePiece(row, col, symbol) {
         // coordinate is on the board and nothing is placed there
-        if(!isCoordinateValid(this.board, row, col) || this.board[row][col])
+        if(!isCoordinateValid(this.board, row, col) || this.board[row][col] || !this.isGameStarted)
             return;
         this.board[row][col] = symbol;
         this.isXturn = !this.isXturn;
         const winner = checkWinner(this.board);
+        if(winner)
+            this.isGameStarted = false;
         if(winner === 'X') {
             this.score.xWon++;
         }

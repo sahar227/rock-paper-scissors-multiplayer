@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import GameBoard from './GameBoard';
 
-
-const initialBoard = [['', '', ''],['', '', ''],['', '', '']];
+const createBoard = () => [['', '', ''],['', '', ''],['', '', '']];
 export default function GameScreen({socket}) {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [isPlayerTurn, setIsPlayerTurn] = useState(null);
     const [playerSymbol, setPlayerSymbol] = useState(null);
     const [score, setScore] = useState(null);
     const [winner, setWinner] = useState(null);
-
-    const [board, setBoard] = useState(initialBoard);
+    const [board, setBoard] = useState(createBoard());
 
     const placePiece = (row, col) => {
         if(winner)
@@ -43,11 +41,15 @@ export default function GameScreen({socket}) {
             });
 
         });
-
         socket.on('gameOver', ({winner, score}) => {
             setScore(score);
             setWinner(winner);
-        })
+        });
+        socket.on('gameRestarted', (isXTurn) => {
+            setWinner(null);
+            setBoard(createBoard());
+            setIsPlayerTurn(checkTurn(isXTurn, playerSymbol));
+        });
 
     }, [isDataLoaded, socket, playerSymbol]);
 
@@ -75,6 +77,7 @@ export default function GameScreen({socket}) {
             <p>{statusMessage()}</p>
             <p>{`X won ${score.xWon} times, O won ${score.oWon} times`}</p>
             <GameBoard board={board} placePiece={placePiece}/>
+            {winner && <button onClick={() => socket.emit('playAgain')}>Play Again</button>}
         </div>
     )
 }
