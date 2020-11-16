@@ -10,7 +10,7 @@ class GameRoom {
         this.participants = [client];
         this.gameSession = null;
         client.emit('roomCreated');
-        client.on('discconnect', () => this.leaveRoom(client.id));
+        client.on('disconnect', () => this.leaveRoom(client.id));
         client.on('leaveRoom', () => this.leaveRoom(client.id));
     }
 
