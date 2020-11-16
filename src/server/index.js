@@ -6,12 +6,9 @@ const io = require('socket.io')(port, {cors: {
     allowedHeaders: ["content-type"]
 }})
 
-// TODO: manage gameRooms as dictionary between room id and room
 const gameRooms = [];
 
 io.on('connection', client => { 
-    console.log('client connected!');
-
     // Handles request to create a new room
     client.on('createRoom', ({roomName, password = ''}) => {
         const room = new GameRoom(roomName, password, client)
@@ -25,8 +22,8 @@ io.on('connection', client => {
     });
 
     // Handles request to join specific room
-    client.on('joinRoom', ({roomName, password=''}) => {
-        const gameRoom = gameRooms.find(gr => gr.roomName === roomName);
+    client.on('joinRoom', ({roomId, password=''}) => {
+        const gameRoom = gameRooms.find(gr => gr.roomId === roomId && gr.isOpenForJoin());
         if(gameRoom)
             gameRoom.joinRoom(client, password);
         else

@@ -9,8 +9,8 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
         socket.emit('createRoom', {roomName, password});
     }
 
-    const joinRoom = (roomName) => (password) => {
-        socket.emit('joinRoom', {roomName, password});
+    const joinRoom = (roomId) => (password) => {
+        socket.emit('joinRoom', {roomId: roomId, password});
     }
     const getRooms = useCallback(() => {
     if(!socket)

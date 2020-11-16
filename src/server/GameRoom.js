@@ -4,6 +4,7 @@ const fullRoomNumber = 2;
 
 class GameRoom {
     constructor(roomName, password = '', client) {
+        this.roomId = client.id;
         this.roomName = roomName;
         this.password = password;
         this.participants = [client];
@@ -42,6 +43,7 @@ class GameRoom {
 
     getRoomDTO() {
         return {
+            roomId: this.roomId,
             roomName: this.roomName,
             isPasswordProtected: this.password.length > 0
         };
