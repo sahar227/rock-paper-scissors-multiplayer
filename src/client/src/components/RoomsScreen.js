@@ -4,6 +4,7 @@ import RoomList from './RoomList';
 
 export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
     const [availableRooms, setAvailableRooms] = useState([])
+    const [roomPrefix, setRoomPrefix] = useState('');
 
     const createRoom = (roomName, password) => {
         socket.emit('createRoom', {roomName, password});
@@ -12,10 +13,10 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
     const joinRoom = (roomId) => (password) => {
         socket.emit('joinRoom', {roomId: roomId, password});
     }
-    const getRooms = useCallback(() => {
+    const getRooms = useCallback((roomPrefix) => {
     if(!socket)
         return;
-    socket.emit('getAvailableRooms');
+    socket.emit('getAvailableRooms', roomPrefix);
     }, [socket]);
 
     useEffect(() => {
@@ -26,13 +27,13 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
           });
           socket.on('roomCreated', () => setWaitScreen());
           socket.on('gameStarted', () => setGameScreen());
-          getRooms(socket);
+          getRooms(roomPrefix);
     }, [socket, getRooms, setGameScreen, setWaitScreen]);
     
     return (
         <div>
             <CreateRoom onCreateRoom={createRoom}/>
-            <RoomList availableRooms={availableRooms} onRefresh={() => getRooms(socket)} joinRoom={joinRoom} />
+            <RoomList availableRooms={availableRooms} onRefresh={() => getRooms(roomPrefix)} joinRoom={joinRoom} roomPrefix={roomPrefix} setRoomPrefix={setRoomPrefix} />
         </div>
         );
 }
