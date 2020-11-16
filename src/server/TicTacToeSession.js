@@ -124,7 +124,7 @@ const checkRows = (board) => {
     for(let row = 0; row < board.length; row++) {
         const element = board[row][0];
         if(!element)
-            return null;
+            continue;
         let winCheck = true;
         for(let col = 1; col < board[row].length; col++)
             if(board[row][col] !== element) {
@@ -141,7 +141,7 @@ const checkCols = (board) => {
     for(let col = 0; col < board[0].length; col++) {
         const element = board[0][col];
         if(!element)
-            return null;
+            continue;
         let winCheck = true;
         for(let row = 1; row < board.length; row++)
             if(board[row][col] !== element) {
