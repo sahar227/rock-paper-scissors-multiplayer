@@ -3,13 +3,17 @@ const TicTacToeSession = require('./TicTacToeSession');
 const fullRoomNumber = 2;
 
 class GameRoom {
-    constructor(roomName, password = '', client) {
+    constructor(client, roomName, password = '') {
         this.roomId = client.id;
         this.roomName = roomName;
         this.password = password;
         this.participants = [client];
         this.gameSession = null;
         client.emit('roomCreated');
+        this.registerForRoomEvents(client);
+    }
+
+    registerForRoomEvents(client) {
         client.on('disconnect', () => this.leaveRoom(client.id));
         client.on('leaveRoom', () => this.leaveRoom(client.id));
     }
@@ -29,6 +33,7 @@ class GameRoom {
         }
 
         this.participants.push(client);
+        this.registerForRoomEvents(client);
         if(this.participants.length === fullRoomNumber) {
             this.startGame();
         }

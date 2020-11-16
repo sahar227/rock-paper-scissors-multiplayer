@@ -11,7 +11,7 @@ const gameRooms = [];
 io.on('connection', client => { 
     // Handles request to create a new room
     client.on('createRoom', ({roomName, password = ''}) => {
-        const room = new GameRoom(roomName, password, client)
+        const room = new GameRoom(client, roomName, password)
         gameRooms.push(room);
     });
 
