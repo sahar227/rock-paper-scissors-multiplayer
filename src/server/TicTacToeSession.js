@@ -120,8 +120,8 @@ const checkRows = (board) => {
             }
         if(winCheck)
             return element;
-        return null;
     }
+    return null;
 }
 
 const checkCols = (board) => {
@@ -137,8 +137,8 @@ const checkCols = (board) => {
             }
         if(winCheck)
             return element;
-        return null;
     }
+    return null;
 }
 
 const checkDiagonals = (board) => {
