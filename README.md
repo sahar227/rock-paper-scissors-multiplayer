@@ -2,6 +2,8 @@
 
 Multiplayer Tic Tac Toe web game
 
+Try it here: https://tic-tac-toe227.netlify.app/
+
 ## Technologies used
 
     ReactJs
