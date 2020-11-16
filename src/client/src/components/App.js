@@ -5,6 +5,7 @@ import {URL} from '../configs';
 import RoomsScreen from './RoomsScreen';
 import GameScreen from './GameScreen';
 import WaitScreen from './WaitScreen';
+import Header from "./Header";
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <div>
-      <h1>Tic Tac Toe!</h1>
+      <Header/>
       {screen === 'rooms' && <RoomsScreen socket={socket} setGameScreen={setGameScreen} setWaitScreen={setWaitScreen}/>}
       {screen === 'wait' && <WaitScreen/>}
       {screen === 'game' && <GameScreen socket={socket}/>}

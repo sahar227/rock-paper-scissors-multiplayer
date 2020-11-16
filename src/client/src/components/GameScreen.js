@@ -72,7 +72,7 @@ export default function GameScreen({socket}) {
     }
 
     return (
-        <div>
+        <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
             <p>{`You are playing as ${playerSymbol}`}</p>
             <p>{statusMessage()}</p>
             <p>{`X won ${score.xWon} times, O won ${score.oWon} times`}</p>

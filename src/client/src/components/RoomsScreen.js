@@ -31,7 +31,7 @@ export default function RoomsScreen({socket, setGameScreen, setWaitScreen}) {
     }, [socket, getRooms, setGameScreen, setWaitScreen]);
     
     return (
-        <div>
+        <div style={{display:"flex", flexDirection:"column", justifyContent:"center"}}>
             <CreateRoom onCreateRoom={createRoom}/>
             <RoomList availableRooms={availableRooms} onRefresh={() => getRooms(roomPrefix)} joinRoom={joinRoom} roomPrefix={roomPrefix} setRoomPrefix={setRoomPrefix} />
         </div>
