@@ -11,16 +11,22 @@ import Header from "./Header";
 function App() {
   const [socket, setSocket] = useState(null);
   const [screen, setScreen] = useState('rooms');
+  const [error, setError] = useState(null);
 
   const setGameScreen = () => {
+    setError(null);
     setScreen('game');
   };
   const setWaitScreen = () => {
+    setError(null);
     setScreen('wait');
   };
 
   useEffect(() => {
     const socket = socketIOClient(URL);
+    socket.on('error', (error) => {
+      setError(error);
+    })
     setSocket(socket);
   },[]);
 
@@ -30,6 +36,7 @@ function App() {
       {screen === 'rooms' && <RoomsScreen socket={socket} setGameScreen={setGameScreen} setWaitScreen={setWaitScreen}/>}
       {screen === 'wait' && <WaitScreen/>}
       {screen === 'game' && <GameScreen socket={socket}/>}
+      {error && <p style={{color:"red"}}>{`Error: ${error}`}</p>}
     </div>
   );
 }

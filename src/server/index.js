@@ -27,6 +27,6 @@ io.on('connection', client => {
         if(gameRoom)
             gameRoom.joinRoom(client, password);
         else
-            client.emit('roomNotFound')
+            client.emit('error', 'Room not found')
     });
  });

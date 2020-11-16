@@ -20,11 +20,11 @@ class GameRoom {
 
     joinRoom(client, password) {
         if(!this.isOpenForJoin()) {
-            client.emit('roomAlreadyFull');
+            client.emit('error', 'Room is already full');
             return;
         }
         if(this.password !== password) {
-            client.emit('incorrectPassword');
+            client.emit('error', 'Password for room is incorrect');
             return;
         }
 
