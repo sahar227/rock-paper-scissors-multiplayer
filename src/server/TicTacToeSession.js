@@ -14,21 +14,23 @@ class TicTacToeSession {
         });
         this.isXturn = true;
         for(const player of this.players) {
-            this.notifyStartGame(player);
             this.registerForNotificationsFromPlayers(player);
+            this.notifyStartGame(player);
         }
     }
 
     notifyStartGame(player) {
         player.socket.emit('gameStarted');
-        player.socket.emit('initialGameData', {
-            symbol: player.symbol,
-            isXTurn: this.isXturn,
-            score: this.score
-        });
     }
 
     registerForNotificationsFromPlayers(player) {
+        player.socket.on('requestInitialData', () => {
+            player.socket.emit('initialGameData', {
+                symbol: player.symbol,
+                isXTurn: this.isXturn,
+                score: this.score
+            });
+        });
         player.socket.on('placePiece', ({row, col}) => {
             if(this.isPlayerTurn(player))
                 this.placePiece(row, col, player.symbol);

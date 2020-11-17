@@ -14,8 +14,9 @@ class GameRoom {
     }
 
     registerForRoomEvents(client) {
-        client.on('disconnect', () => this.leaveRoom(client.id));
-        client.on('leaveRoom', () => this.leaveRoom(client.id));
+        // when any player leaves, room is no longer active
+        client.on('disconnect', () => this.participants = []);
+        client.on('leaveRoom', () => this.participants = []);
     }
 
     isOpenForJoin() {
@@ -40,10 +41,6 @@ class GameRoom {
     }
     startGame() {
         this.gameSession = new TicTacToeSession(this.participants);
-    }
-
-    leaveRoom(participantId) {
-        this.participants = this.participants.filter(participant => participant.id !== participantId)
     }
 
     getRoomDTO() {

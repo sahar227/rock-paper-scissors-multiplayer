@@ -51,6 +51,8 @@ export default function GameScreen({socket}) {
             setIsPlayerTurn(checkTurn(isXTurn, playerSymbol));
         });
 
+        socket.emit('requestInitialData');
+
     }, [isDataLoaded, socket, playerSymbol]);
 
     if(!isDataLoaded)
